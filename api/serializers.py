@@ -23,10 +23,8 @@ class ProductSerializer(rest_serialize.ModelSerializer):
 
     def get_lessons(self, obj):
         return len(Lesson.objects.filter(
-                product=Product.objects.get(
-                id=obj.id)
-                ))
-    
+                product=Product.objects.get(id=obj.id)))
+
     def get_author(self, obj):
         return obj.author.username
 

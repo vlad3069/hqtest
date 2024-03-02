@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 from product.models import Product
 
@@ -19,6 +19,7 @@ class Group(models.Model):
         User,
         related_name='group_users',
     )
- 
+
     def __str__(self):
-        return f"{self.name} | Количество участников {self.usersInGroup.count()}"
+        return (f'Группа {self.name} - '
+                f'Количество участников {self.usersInGroup.count()}')

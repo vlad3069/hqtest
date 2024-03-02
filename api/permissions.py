@@ -1,7 +1,9 @@
-from rest_framework import permissions
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions
+
 from group.models import Group
 from product.models import Product
+
 
 class InGroupOrAuthor(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -10,4 +12,5 @@ class InGroupOrAuthor(permissions.BasePermission):
         if product.author == request.user:
             return True
 
-        return Group.objects.filter(product=product, users=request.user).exists()
+        return Group.objects.filter(product=product,
+                                    users=request.user).exists()

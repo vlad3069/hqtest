@@ -1,11 +1,14 @@
 from django.db.models import Count
+
 from group.models import Group
 
 
 def add_user_to_groups(product, user):
 
-    groups = Group.objects.filter(product=product).annotate(num_users=Count('usersInGroup'))
-    match_groups = groups.filter(num_users__lt=product.maxValue).order_by('num_users')
+    groups = Group.objects.filter(product=product).annotate(
+        num_users=Count('usersInGroup'))
+    match_groups = groups.filter(
+        num_users__lt=product.maxValue).order_by('num_users')
 
     if match_groups.exists():
         for group in match_groups:
@@ -15,13 +18,14 @@ def add_user_to_groups(product, user):
         new_group = Group.objects.create(name=product.name, product=product)
         new_group.usersInGroup.add(user)
         return rebuild_groups(groups)
-    
+
     return None
-    
+
+
 def rebuild_groups(groups):
 
     groups = groups.order_by('num_users')
-    
+
     while groups.last().num_users - groups.first().num_users > 1:
         min_group = groups.first()
         max_group = groups.last()

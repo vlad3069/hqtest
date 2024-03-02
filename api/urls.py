@@ -1,9 +1,8 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from api.views import (ProductListView, ProductAccessAPIView,
-                       LessonListView, GroupListAPIView)
-
+from api.views import (GroupListAPIView, LessonListView, ProductAccessAPIView,
+                       ProductListView)
 
 urls_v1 = [
     path(
